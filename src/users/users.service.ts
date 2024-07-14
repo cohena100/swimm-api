@@ -10,7 +10,11 @@ export class UsersService {
     return this.databaseService.user.create({ data: createUserDto });
   }
 
-  async findAll() {
+  async findAll(page: number, limit: number) {
+    return this.databaseService.user.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
     return this.databaseService.user.findMany({});
   }
 

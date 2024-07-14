@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
@@ -20,8 +22,11 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(
+    @Query('_page', ParseIntPipe) page?: number,
+    @Query('_limit', ParseIntPipe) limit?: number,
+  ) {
+    return this.usersService.findAll(page, limit);
   }
 
   @Get(':id')
